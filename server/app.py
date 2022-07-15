@@ -4,7 +4,7 @@ from transformers import pipeline
 classifier = pipeline(
     "text-classification",
     model="bhadresh-savani/distilbert-base-uncased-emotion",
-    return_all_scores=True,
+    top_k=1,
 )
 summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
 analyzer = pipeline(
