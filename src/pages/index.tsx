@@ -64,10 +64,12 @@ const Home: NextPage<HomeProps> = ({ articles }: HomeProps) => {
         <title>Sieve</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Navbar />
-      <div className="flex my-4 justify-center">
-        <FilterMenu />
-        <SortMenu />
+      <div className="sticky top-0 z-50">
+      	<Navbar />
+      	<div className="flex py-4 mb-4 shadow-md bg-base-200 justify-center">
+      	  <FilterMenu />
+      	  <SortMenu />
+      	</div>
       </div>
       <div className="flex flex-wrap gap-x-1 gap-y-5 mx-4 ">
         {articles.map((article, i) => (
