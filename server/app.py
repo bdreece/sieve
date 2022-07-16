@@ -1,17 +1,14 @@
 from flask import Flask, request
 from transformers import pipeline
 
-classifier = pipeline(
-    "text-classification",
-    model="bhadresh-savani/distilbert-base-uncased-emotion",
-    top_k=1,
-)
-summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
-analyzer = pipeline(
-    "sentiment-analysis", model="cardiffnlp/twitter-roberta-base-sentiment-latest"
-)
+from analyzer import get_analyzer
+from classifier import get_classifier
+from summarizer import get_summarizer
 
 app = Flask(__name__)
+analyzer = get_analyzer("development")
+classifier = get_classifier("development")
+summarizer = get_summarizer("development")
 
 
 @app.post("/summary")
