@@ -16,6 +16,7 @@
 
 
 from flask import Flask, request
+from flask_cors import CORS, cross_origin
 from transformers import pipeline
 
 from analyzer import get_analyzer
@@ -23,12 +24,16 @@ from classifier import get_classifier
 from summarizer import get_summarizer
 
 app = Flask(__name__)
+cors = CORS(app)
+app.config["CORS_HEADERS"] = "Content-Type"
+
 analyzer = get_analyzer()
 classifier = get_classifier()
 summarizer = get_summarizer()
 
 
-@app.post("/summary")
+@app.route("/summary", methods=["POST", "OPTIONS"])
+@cross_origin()
 def getSummary():
     content = request.json["content"]
     max_length = request.json["maxLength"]
@@ -39,7 +44,8 @@ def getSummary():
     }
 
 
-@app.post("/sentiment")
+@app.route("/sentiment", methods=["POST", "OPTIONS"])
+@cross_origin()
 def getSentiment():
     content = request.json["content"]
     sentiment = analyzer(content)
@@ -48,7 +54,8 @@ def getSentiment():
     }
 
 
-@app.post("/emotion")
+@app.route("/emotion", methods=["POST", "OPTIONS"])
+@cross_origin()
 def getEmotion():
     content = request.json["content"]
     emotions = classifier(content)
