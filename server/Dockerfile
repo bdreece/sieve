@@ -11,6 +11,8 @@ COPY requirements.txt .
 
 RUN pip3 install -r ./requirements.txt
 
-COPY app.py .
+COPY ./*.py .
 
-CMD ["flask", "run"]
+RUN python3 fetchModels.py
+
+CMD ["gunicorn", "server:app"]
