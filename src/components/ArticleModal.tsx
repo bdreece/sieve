@@ -14,8 +14,37 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-const ArticleModal = () => {
-  return <></>;
+import { Article } from 'scripts/article.server';
+
+export interface ArticleModalProps {
+  article: Article;
+  index: string;
+}
+
+const ArticleModal = ({ article, index }: ArticleModalProps) => {
+  return (
+    <>
+      <label htmlFor={index} className="btn modal-button">
+        See More
+      </label>
+
+      <input type="checkbox" id={index} className="modal-toggle" />
+      <label htmlFor={index} className="modal modal-bottom sm:modal-middle">
+        <div className="modal-box">
+          <h3 className="font-bold text-lg display">{article.title}</h3>
+          <p className="py-4">{article.summary}</p>
+          <div className="modal-action">
+            <a className="btn btn-primary" href={article.url}>
+              View Article
+            </a>
+            <label htmlFor={index} className="btn btn-secondary">
+              Close
+            </label>
+          </div>
+        </div>
+      </label>
+    </>
+  );
 };
 
 export default ArticleModal;

@@ -16,22 +16,31 @@
  */
 import Image from 'next/image';
 import { Article } from 'scripts/article.server';
+import ArticleModal from './ArticleModal';
 
 export interface ArticleCardProps {
   article: Article;
+  index: string;
 }
 
-const ArticleCard = ({ article }: ArticleCardProps) => {
+const ArticleCard = ({ article, index }: ArticleCardProps) => {
   return (
-    <div className="card lg:card-side bg-base-100 shadow-xl">
+    <div className="card bg-base-100 w-96 m-4 shadow-xl">
       <figure>
-        <Image src={article.urlToImage} alt="Article Image" />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={article.urlToImage}
+          alt="Article Image"
+          width="400"
+          height="300"
+        />
       </figure>
       <div className="card-body">
         <h2 className="card-title">{article.title}</h2>
         <p>{article.source.name}</p>
+        <p>{article.publishedAt.toLocaleString()}</p>
         <div className="card-actions justify-end">
-          <button className="btn btn-primary">View Summary</button>
+          <ArticleModal index={index} article={article} />
         </div>
       </div>
     </div>
