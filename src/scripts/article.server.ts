@@ -32,6 +32,7 @@ export interface Article {
   urlToImage: string;
   publishedAt: Date;
   sentiment?: Sentiment;
+  summary?: string;
   emotion?: Emotion;
 }
 

@@ -34,8 +34,13 @@ const getSentiment = async (
     },
   };
 
-  const response = await axios.request(options);
-  return response.status == 200 ? response.data.sentiment : undefined;
+  try {
+    const response = await axios.request(options);
+    return response.status == 200 ? response.data.sentiment : undefined;
+  } catch (e) {
+    console.error(e);
+    return undefined;
+  }
 };
 
 export default getSentiment;
