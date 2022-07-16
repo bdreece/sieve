@@ -38,11 +38,16 @@ export const getStaticProps: GetStaticProps<HomeProps> = async () => {
   const articles = await Promise.all(
     (
       await getArticles()
-    ).map(async article => {
-      const content = (await getArticleContent(article.url)) ?? '';
-      article.sentiment = await getSentiment(content);
-      article.emotion = await getEmotion(content);
-      return article;
+    ).filter(async article => {
+      try {
+        const content = (await getArticleContent(article.url)) ?? '';
+        article.sentiment = await getSentiment(content);
+        article.emotion = await getEmotion(content);
+        return article;
+      } catch (e) {
+        console.error(e);
+        return null;
+      }
     })
   );
   return {
@@ -55,7 +60,7 @@ export const getStaticProps: GetStaticProps<HomeProps> = async () => {
 
 const Home: NextPage<HomeProps> = ({ articles }: HomeProps) => {
   return (
-    <>
+    <div className="bg-base-299">
       <Head>
         <title>Sieve</title>
         <link rel="icon" href="/favicon.ico" />
@@ -67,13 +72,13 @@ const Home: NextPage<HomeProps> = ({ articles }: HomeProps) => {
       </div>
       <div className="flex flex-wrap">
         {articles.map((article, i) => (
-          <div key={i} className="flex-none">
-            <ArticleCard article={article} />
+          <div key={i} className="flex-0">
+            <ArticleCard index={i.toString()} article={article} />
           </div>
         ))}
       </div>
       <Footer />
-    </>
+    </div>
   );
 };
 
