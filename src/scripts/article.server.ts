@@ -30,7 +30,7 @@ export interface Article {
   title: string;
   url: string;
   urlToImage: string;
-  publishedAt: Date;
+  publishedAt: string;
   sentiment?: Sentiment;
   summary?: string;
   emotion?: Emotion;
@@ -38,7 +38,7 @@ export interface Article {
 
 export const getArticles = async (): Promise<Article[]> => {
   const options: AxiosRequestConfig = {
-    url: `${NEWS_API_HOST}/top-headlines?country=us&pageSize=100`,
+    url: `${NEWS_API_HOST}/everything?language=en&sources=reuters,bbc-news,the-washington-post,the-verge,usa-today,financial-times`,
     method: 'GET',
     headers: {
       'X-Api-Key': NEWS_API_KEY,
