@@ -14,13 +14,22 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+import Image from 'next/image';
 import Link from 'next/link';
 
 const Navbar = () => {
   return (
     <div className="navbar bg-neutral justify-around">
       <Link href="/">
-        <a className="btn btn-ghost text-3xl text-base-100 display">Sieve</a>
+        <a className="btn btn-ghost">
+          <Image
+            src="/favicon-32x32.png"
+            height={32}
+            width={32}
+            alt="favicon"
+          />
+          <h1 className="ml-2 text-3xl text-base-100 display">Sieve</h1>
+        </a>
       </Link>
       <p className="text-lg text-base-100">
         Sifting through the news with NLP models
