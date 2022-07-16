@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-import Image from 'next/image';
 import { Article } from 'scripts/article.server';
 import ArticleModal from './ArticleModal';
 
@@ -23,9 +22,16 @@ export interface ArticleCardProps {
   index: string;
 }
 
+const formatDate = (date: Date) => {
+  const month = date.getMonth();
+  const day = date.getDate();
+  const year = date.getFullYear();
+  return `${month}/${day}/${year}`;
+};
+
 const ArticleCard = ({ article, index }: ArticleCardProps) => {
   return (
-    <div className="card bg-base-100 w-96 m-4 shadow-xl">
+    <div className="card bg-base-100 max-w-xs shadow-xl">
       <figure>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -36,9 +42,13 @@ const ArticleCard = ({ article, index }: ArticleCardProps) => {
         />
       </figure>
       <div className="card-body">
-        <h2 className="card-title">{article.title}</h2>
-        <p>{article.source.name}</p>
-        <p>{article.publishedAt.toLocaleString()}</p>
+        <h2 className="card-title display">{article.title}</h2>
+        <ul className="list-none">
+          <li>{article.source.name}</li>
+          {article.sentiment ? <li>Sentiment {article.sentiment}</li> : null}
+          {article.emotion ? <li>Emotion: {article.emotion}</li> : null}
+        </ul>
+        <div className="flex-1" />
         <div className="card-actions justify-end">
           <ArticleModal index={index} article={article} />
         </div>

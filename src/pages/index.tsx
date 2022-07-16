@@ -43,11 +43,10 @@ export const getStaticProps: GetStaticProps<HomeProps> = async () => {
         const content = (await getArticleContent(article.url)) ?? '';
         article.sentiment = await getSentiment(content);
         article.emotion = await getEmotion(content);
-        return article;
       } catch (e) {
         console.error(e);
-        return null;
       }
+      return article;
     })
   );
   return {
@@ -60,19 +59,19 @@ export const getStaticProps: GetStaticProps<HomeProps> = async () => {
 
 const Home: NextPage<HomeProps> = ({ articles }: HomeProps) => {
   return (
-    <div className="bg-base-299">
+    <div className="bg-base-200">
       <Head>
         <title>Sieve</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar />
-      <div className="flex justify-center">
+      <div className="flex my-4 justify-center">
         <FilterMenu />
         <SortMenu />
       </div>
-      <div className="flex flex-wrap">
+      <div className="flex flex-wrap gap-x-1 gap-y-5 mx-4 ">
         {articles.map((article, i) => (
-          <div key={i} className="flex-0">
+          <div key={i} className="flex-auto self-stretch flex justify-center">
             <ArticleCard index={i.toString()} article={article} />
           </div>
         ))}
