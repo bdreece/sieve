@@ -3,7 +3,7 @@ FROM alpine:latest
 ARG PASSWORD
 
 # Install python3 and curl
-RUN apk add --update --no-cache python3 curl rust cargo gcc g++ binutils openssl-dev && \
+RUN apk add --update --no-cache python3 python3-dev curl rust cargo gcc g++ binutils openssl-dev && \
     ln -sf python3 /usr/bin/python
 
 # Setup user and workspace
