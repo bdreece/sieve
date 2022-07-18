@@ -1,15 +1,14 @@
 FROM adreeve/python-numpy
-
-ADD repositories /etc/apk/repositories
-ARG PASSWORD
+FROM o76923/alpine-numpy-stack
 
 # Install python3 and curl
-RUN apk add --update --no-cache python3 python3-dev curl rust cargo gcc g++ py3-numpy@community py3-pip binutils openssl-dev && \
+RUN 
+RUN apt install python3 python3-dev curl rust cargo gcc g++ py3-pip binutils openssl-dev && \
     ln -sf python3 /usr/bin/python
 
 # Setup user and workspace
 RUN adduser -D -s /bin/bash user && \
-    echo user:$PASSWORD | chpasswd
+    echo user:password | chpasswd
 USER user
 WORKDIR /usr/src/sieve
 ENV PATH=$PATH:/home/user/.local/bin
