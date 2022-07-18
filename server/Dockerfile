@@ -13,7 +13,7 @@ RUN pip3 install --user --no-cache --upgrade pip setuptools
 RUN pip3 install --user flask flask-cors "transformers[torch]"
 
 # Move sources
-COPY ./*.py .
+COPY ./*.py ./
 
 # Fetch Hugging Face models
 RUN python3 fetchModels.py
