@@ -1,8 +1,4 @@
-FROM o76923/alpine-numpy-stack
-
-# Install python3 and curl
-RUN apk add --update --no-cache curl rust cargo gcc g++ py3-pip binutils openssl-dev && \
-    ln -sf python3 /usr/bin/python
+FROM huggingface/transformers-cpu
 
 # Setup user and workspace
 RUN adduser -D -s /bin/bash user && \
