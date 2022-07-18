@@ -3,7 +3,7 @@ FROM huggingface/transformers-cpu
 WORKDIR /usr/src/sieve
 
 # Install dependencies
-RUN pip3 install --user flask flask-cors
+RUN pip3 install --user flask flask-cors gunicorn
 
 # Move sources
 COPY ./*.py ./
