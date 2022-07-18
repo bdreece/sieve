@@ -1,9 +1,10 @@
 FROM alpine:latest
 
+ADD repositories /etc/apk/repositories
 ARG PASSWORD
 
 # Install python3 and curl
-RUN apk add --update --no-cache python3 python3-dev curl rust cargo gcc g++ binutils openssl-dev && \
+RUN apk add --update --no-cache python3 python3-dev curl rust cargo gcc g++ py3-numpy@community py3-pip binutils openssl-dev && \
     ln -sf python3 /usr/bin/python
 
 # Setup user and workspace
@@ -13,8 +14,6 @@ USER user
 WORKDIR /usr/src/sieve
 ENV PATH=$PATH:/home/user/.local/bin
 
-# Install and upgrade PIP
-RUN curl -fsSL https://bootstrap.pypa.io/get-pip.py | python3
 RUN pip3 install --user --no-cache --upgrade pip setuptools
 
 # Install dependencies
