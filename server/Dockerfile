@@ -10,8 +10,7 @@ ENV PATH=$PATH:/home/user/.local/bin
 RUN pip3 install --user --no-cache --upgrade pip setuptools
 
 # Install dependencies
-COPY requirements.txt .
-RUN pip3 install --user -r ./requirements.txt -f https://download.pytorch.org/whl/cpu/torch_stable.html
+RUN pip3 install --user flask flask-cors "transformers[torch]"
 
 # Move sources
 COPY ./*.py .
