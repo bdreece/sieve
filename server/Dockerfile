@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM adreeve/python-numpy
 
 ADD repositories /etc/apk/repositories
 ARG PASSWORD
