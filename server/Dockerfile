@@ -1,7 +1,7 @@
 FROM huggingface/transformers-cpu
 
 # Setup user and workspace
-RUN adduser -D -s /bin/bash user && \
+RUN adduser --home /home/user --shell /bin/bash user && \
     echo user:password | chpasswd
 USER user
 WORKDIR /usr/src/sieve
