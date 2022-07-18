@@ -1,4 +1,3 @@
-FROM adreeve/python-numpy
 FROM o76923/alpine-numpy-stack
 
 # Install python3 and curl
