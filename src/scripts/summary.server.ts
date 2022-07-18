@@ -17,6 +17,7 @@
 import type { AxiosRequestConfig } from 'axios';
 import axios from 'axios';
 import { BACKEND_API_HOST } from './env.server';
+import escapeString from './json';
 
 const getSummary = async (content: string): Promise<string | undefined> => {
   const options: AxiosRequestConfig = {
@@ -25,16 +26,19 @@ const getSummary = async (content: string): Promise<string | undefined> => {
     headers: {
       'Content-Type': 'application/json',
     },
-    data: {
-      content,
-    },
+    data: escapeString(
+      JSON.stringify({
+        content: content,
+        maxLength: 30,
+      })
+    ),
   };
 
   try {
     const response = await axios.request(options);
     return response.status == 200 ? response.data.summary : undefined;
   } catch (e) {
-    console.error(e);
+    console.error('oopsie bad summary');
     return undefined;
   }
 };

@@ -41,7 +41,7 @@ const getEmotion = async (content: string): Promise<Emotion | undefined> => {
     const response = await axios.request(options);
     return response.status == 200 ? response.data.emotion : undefined;
   } catch (e) {
-    console.error(e);
+    console.error('oopsie no emotion');
     return undefined;
   }
 };

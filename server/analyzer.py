@@ -17,7 +17,7 @@
 from transformers import AutoModelForSequenceClassification, AutoTokenizer, pipeline
 
 
-def get_analyzer(mode):
+def get_analyzer():
     path = "./models/analyzer"
     model = AutoModelForSequenceClassification.from_pretrained(path)
     tokenizer = AutoTokenizer.from_pretrained(path)

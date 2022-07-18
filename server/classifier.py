@@ -20,4 +20,4 @@ def get_classifier():
     path = "./models/classifier"
     model = AutoModelForSequenceClassification.from_pretrained(path)
     tokenizer = AutoTokenizer.from_pretrained(path)
-    return pipeline("text-classification", model=model, path=path, top_k=1)
+    return pipeline("text-classification", model=model, tokenizer=tokenizer, top_k=1)

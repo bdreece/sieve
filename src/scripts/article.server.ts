@@ -21,6 +21,7 @@ import { JSDOM } from 'jsdom';
 import { NEWS_API_HOST, NEWS_API_KEY } from './env.server';
 import { Emotion } from './emotion.server';
 import { Sentiment } from './sentiment.server';
+import escapeString from './json';
 
 export interface Article {
   source: {
@@ -56,5 +57,5 @@ export const getArticleContent = async (
   const response = await axios.get(url);
   const dom = new JSDOM(response.data, { url });
   const article = new Readability(dom.window.document).parse();
-  return article?.textContent;
+  return escapeString(article?.textContent ?? '');
 };

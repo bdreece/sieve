@@ -40,7 +40,7 @@ def getSummary():
     return {
         "summary": summarizer(
             content, max_length=max_length, min_length=30, do_sample=False
-        )["summary_text"]
+        )[0]["summary_text"]
     }
 
 
@@ -50,7 +50,7 @@ def getSentiment():
     content = request.json["content"]
     sentiment = analyzer(content)
     return {
-        "sentiment": sentiment["label"],
+        "sentiment": sentiment[0]["label"],
     }
 
 
@@ -67,5 +67,5 @@ def getEmotion():
             max_score = this_score
             max_emotion = emotion["label"]
     return {
-        emotion: max_emotion,
+        "emotion": max_emotion,
     }

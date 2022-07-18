@@ -38,7 +38,7 @@ const getSentiment = async (
     const response = await axios.request(options);
     return response.status == 200 ? response.data.sentiment : undefined;
   } catch (e) {
-    console.error(e);
+    console.error('oopsie no sentiment');
     return undefined;
   }
 };

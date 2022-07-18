@@ -13,11 +13,11 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
-from transformers import AutoModelForSequenceClassification, AutoTokenizer, pipeline
+from transformers import AutoModelForSeq2SeqLM, AutoTokenizer, pipeline
 
 
 def get_summarizer():
     path = "./models/summarizer"
-    model = AutoModelForSequenceClassification.from_pretrained(path)
+    model = AutoModelForSeq2SeqLM.from_pretrained(path)
     tokenizer = AutoTokenizer.from_pretrained(path)
     return pipeline("summarization", model=model, tokenizer=tokenizer)

@@ -29,6 +29,7 @@ import SortMenu from 'components/SortMenu';
 import ArticleCard from 'components/ArticleCard';
 import getSentiment from 'scripts/sentiment.server';
 import getEmotion from 'scripts/emotion.server';
+import getSummary from 'scripts/summary.server';
 
 interface HomeProps {
   articles: Article[];
@@ -41,10 +42,12 @@ export const getStaticProps: GetStaticProps<HomeProps> = async () => {
     ).filter(async article => {
       try {
         const content = (await getArticleContent(article.url)) ?? '';
+        article.summary = await getSummary(content);
+        console.debug({ summary: article.summary });
         article.sentiment = await getSentiment(content);
         article.emotion = await getEmotion(content);
       } catch (e) {
-        console.error(e);
+        console.error('zoinks');
       }
       return article;
     })
@@ -65,11 +68,11 @@ const Home: NextPage<HomeProps> = ({ articles }: HomeProps) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="sticky top-0 z-50">
-      	<Navbar />
-      	<div className="flex py-4 mb-4 shadow-md bg-base-200 justify-center">
-      	  <FilterMenu />
-      	  <SortMenu />
-      	</div>
+        <Navbar />
+        <div className="flex py-4 mb-4 shadow-md bg-base-200 justify-center">
+          <FilterMenu />
+          <SortMenu />
+        </div>
       </div>
       <div className="flex flex-wrap gap-x-1 gap-y-5 mx-4 ">
         {articles.map((article, i) => (

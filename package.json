@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "concurrently 'pnpm dev:client' 'pnpm dev:server'",
     "dev:client": "next dev",
-    "dev:server": "cd server; flask run",
+    "dev:server": "cd server; gunicorn app:app",
     "build": "next build",
     "build:server": "cd server; docker build -t 'bdreece/sieve'",
     "start": "next start",

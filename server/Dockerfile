@@ -1,18 +1,31 @@
 FROM alpine:latest
 
-WORKDIR /usr/src/sieve
+ARG PASSWORD
 
-RUN apk add --update --no-cache python3 && \
+# Install python3 and curl
+RUN apk add --update --no-cache python3 curl rust cargo gcc g++ binutils openssl-dev && \
     ln -sf python3 /usr/bin/python
-RUN python3 -m ensurepip
-RUN pip3 install --no-cache --upgrade pip setuptools
 
+# Setup user and workspace
+RUN adduser -D -s /bin/bash user && \
+    echo user:$PASSWORD | chpasswd
+USER user
+WORKDIR /usr/src/sieve
+ENV PATH=$PATH:/home/user/.local/bin
+
+# Install and upgrade PIP
+RUN curl -fsSL https://bootstrap.pypa.io/get-pip.py | python3
+RUN pip3 install --user --no-cache --upgrade pip setuptools
+
+# Install dependencies
 COPY requirements.txt .
+RUN pip3 install --user -r ./requirements.txt -f https://download.pytorch.org/whl/cpu/torch_stable.html
 
-RUN pip3 install -r ./requirements.txt
-
+# Move sources
 COPY ./*.py .
 
+# Fetch Hugging Face models
 RUN python3 fetchModels.py
 
-CMD ["gunicorn", "server:app"]
+# Launch server
+CMD ["gunicorn", "-b", "0.0.0.0:${PORT}", "app:app"]
