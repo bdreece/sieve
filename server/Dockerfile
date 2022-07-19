@@ -3,6 +3,9 @@ FROM huggingface/transformers-cpu
 WORKDIR /usr/src/sieve
 
 # Install dependencies
+RUN pip3 install virtualenv
+RUN virtualenv venv
+RUN source venv/bin/activate
 RUN pip3 install --user flask flask-cors gunicorn
 
 # Move sources
