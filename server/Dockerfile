@@ -13,4 +13,4 @@ RUN mkdir -p ./models/analyzer ./models/summarizer ./models/classifier
 RUN python3 fetchModels.py
 
 # Launch server
-CMD ["gunicorn", "-b", "0.0.0.0:${PORT}", "app:app"]
+CMD ["gunicorn", "-b", ":$PORT", "app:app"]
