@@ -5,7 +5,7 @@ WORKDIR /usr/src/sieve
 # Install dependencies
 RUN pip3 install virtualenv
 RUN virtualenv /opt/venv
-RUN /opt/venv/bin/pip3 install --user flask flask-cors gunicorn
+RUN /opt/venv/bin/pip3 install flask flask-cors gunicorn
 
 # Move sources
 COPY ./*.py ./
