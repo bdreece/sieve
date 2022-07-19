@@ -12,5 +12,7 @@ RUN mkdir -p ./models/analyzer ./models/summarizer ./models/classifier
 # Fetch Hugging Face models
 RUN python3 fetchModels.py
 
+ENV PORT=8080
+
 # Launch server
 CMD ["gunicorn", "-b", ":$PORT", "app:app"]
