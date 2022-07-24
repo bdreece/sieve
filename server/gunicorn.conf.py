@@ -6,3 +6,4 @@ if port is None:
     port = 8080
 bind = f":{port}"
 workers = multiprocessing.cpu_count() * 2 + 1
+timeout = 0
