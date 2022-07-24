@@ -14,36 +14,37 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-import axios, { AxiosRequestConfig } from 'axios';
-import { BACKEND_API_HOST } from './env.server';
+import axios, {AxiosRequestConfig} from 'axios';
+import {BACKEND_API_HOST} from './env.server';
+import escapeString from './json';
 
 export type Emotion =
-  | 'sadness'
-  | 'joy'
-  | 'love'
-  | 'anger'
-  | 'fear'
-  | 'surprise';
+    | 'sadness'
+    | 'joy'
+    | 'love'
+    | 'anger'
+    | 'fear'
+    | 'surprise';
 
-const getEmotion = async (content: string): Promise<Emotion | undefined> => {
-  const options: AxiosRequestConfig = {
-    url: `${BACKEND_API_HOST}/emotion`,
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    data: {
-      content,
-    },
-  };
+const getEmotion = async (content: string): Promise<Emotion | null> => {
+    const options: AxiosRequestConfig = {
+        url: `${BACKEND_API_HOST}/emotion`,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        data: escapeString(JSON.stringify({
+            content,
+        })),
+    };
 
-  try {
-    const response = await axios.request(options);
-    return response.status == 200 ? response.data.emotion : undefined;
-  } catch (e) {
-    console.error('oopsie no emotion');
-    return undefined;
-  }
+    try {
+        const response = await axios.request(options);
+        return response.status == 200 ? response.data.emotion : null;
+    } catch (e) {
+        console.error('oopsie no emotion');
+        return null;
+    }
 };
 
 export default getEmotion;

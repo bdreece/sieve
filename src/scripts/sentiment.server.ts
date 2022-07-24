@@ -14,33 +14,34 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-import type { AxiosRequestConfig } from 'axios';
+import type {AxiosRequestConfig} from 'axios';
 import axios from 'axios';
-import { BACKEND_API_HOST } from './env.server';
+import {BACKEND_API_HOST} from './env.server';
+import escapeString from './json';
 
 export type Sentiment = 'positive' | 'neutral' | 'negative';
 
 const getSentiment = async (
-  content: string
-): Promise<Sentiment | undefined> => {
-  const options: AxiosRequestConfig = {
-    url: `${BACKEND_API_HOST}/sentiment`,
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    data: {
-      content,
-    },
-  };
+    content: string
+): Promise<Sentiment | null> => {
+    const options: AxiosRequestConfig = {
+        url: `${BACKEND_API_HOST}/sentiment`,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        data: escapeString(JSON.stringify({
+            content,
+        })),
+    };
 
-  try {
-    const response = await axios.request(options);
-    return response.status == 200 ? response.data.sentiment : undefined;
-  } catch (e) {
-    console.error('oopsie no sentiment');
-    return undefined;
-  }
+    try {
+        const response = await axios.request(options);
+        return response.status == 200 ? response.data.sentiment : null;
+    } catch (e) {
+        console.error('oopsie no sentiment');
+        return null;
+    }
 };
 
 export default getSentiment;

@@ -14,33 +14,33 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-import type { AxiosRequestConfig } from 'axios';
+import type {AxiosRequestConfig} from 'axios';
 import axios from 'axios';
-import { BACKEND_API_HOST } from './env.server';
+import {BACKEND_API_HOST} from './env.server';
 import escapeString from './json';
 
-const getSummary = async (content: string): Promise<string | undefined> => {
-  const options: AxiosRequestConfig = {
-    url: `${BACKEND_API_HOST}/summary`,
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    data: escapeString(
-      JSON.stringify({
-        content: content,
-        maxLength: 30,
-      })
-    ),
-  };
+const getSummary = async (content: string): Promise<string | null> => {
+    const options: AxiosRequestConfig = {
+        url: `${BACKEND_API_HOST}/summary`,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        data: escapeString(
+            JSON.stringify({
+                content: content,
+                maxLength: 30,
+            })
+        ),
+    };
 
-  try {
-    const response = await axios.request(options);
-    return response.status == 200 ? response.data.summary : undefined;
-  } catch (e) {
-    console.error('oopsie bad summary');
-    return undefined;
-  }
+    try {
+        const response = await axios.request(options);
+        return response.status == 200 ? response.data.summary : null;
+    } catch (e) {
+        console.error('oopsie bad summary');
+        return null;
+    }
 };
 
 export default getSummary;
