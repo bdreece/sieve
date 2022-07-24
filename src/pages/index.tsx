@@ -39,17 +39,17 @@ export const getStaticProps: GetStaticProps<HomeProps> = async () => {
   const articles = await Promise.all(
     (
       await getArticles()
-    ).filter(async article => {
+    ).map(async article => {
       try {
-        const content = (await getArticleContent(article.url)) ?? '';
-        article.summary = await getSummary(content);
-        console.debug({ summary: article.summary });
-        article.sentiment = await getSentiment(content);
-        article.emotion = await getEmotion(content);
+        const content = (await getArticleContent(article.url));
+        if (!content) throw "could not read document";
+        const [summary, sentiment, emotion] = await Promise.all([getSummary(content), getSentiment(content), getEmotion(content)])
+        console.debug({ summary, sentiment, emotion });
+        return { ...article, summary, sentiment, emotion };
       } catch (e) {
-        console.error('zoinks');
+        console.error({ GetStaticPropsError: e });
+        return article;
       }
-      return article;
     })
   );
   return {
